@@ -14,10 +14,7 @@ A complete smart contract system featuring an ERC-20 token (PPT) and a medical i
   - [Testing](#testing)
   - [Deployment](#deployment)
   - [Verification](#verification)
-- [Contract Architecture](#contract-architecture)
 - [Network Information](#network-information)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## 🚀 About The Project
 
@@ -138,7 +135,7 @@ forge create src/MedInvoiceContract.sol:MedInvoiceContract
 
 ### Verification
 
-Verify deployed contracts on Basescan:
+- Verify deployed contracts on Basescan:
 ```bash
 forge verify-contract
 --chain-id 84532
@@ -146,8 +143,9 @@ forge verify-contract
 src/PPTToken.sol:PPTToken
 --etherscan-api-key $ETHERSCAN_API_KEY
 --constructor-args $(cast abi-encode "constructor(uint256)" 1000)
-
-Verify MedInvoiceContract
+```
+- Verify MedInvoiceContract
+```bash
 forge verify-contract
 --chain-id 84532
 <CONTRACT_ADDRESS>
