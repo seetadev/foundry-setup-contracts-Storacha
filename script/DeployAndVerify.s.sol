@@ -5,7 +5,7 @@ import "forge-std/Script.sol";
 import "../src/PPTToken.sol";
 import "../src/MedInvoiceContract.sol";
 
-contract DeployContracts is Script {
+contract DeployAndVerifyContract is Script {
     function run() external {
         // Start broadcasting transactions
         vm.startBroadcast();
