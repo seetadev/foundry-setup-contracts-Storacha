@@ -11,12 +11,12 @@ contract PPTTokenTest is Test {
         token = new PPTToken(1000);
     }
 
-    function testInitialSupply() public {
+    function testInitialSupply() public  view{
         // totalSupply should be 1000 * 10^18
         assertEq(token.totalSupply(), 1000 * 10**18);
     }
 
-    function testBalanceOfDeployer() public {
+    function testBalanceOfDeployer() public view{
         // Deployer should have initial supply balance
         assertEq(token.balanceOf(address(this)), 1000 * 10**18);
     }
