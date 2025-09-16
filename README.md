@@ -96,6 +96,37 @@ Run the test suite:
 Run tests with verbosity
 forge test -vvv
 
+### Deploying to Neon EVM Devnet
+
+Add these environment variables to `.env`:
+
+```bash
+RPC_URL_DEVNET=https://devnet.neonevm.org
+CHAIN_ID_DEVNET=245022926
+VERIFIER_URL_BLOCKSCOUT=https://neon-devnet.blockscout.com/api
+```
+1. **Deploy PPTToken contract:**
+```bash
+source .env
+```
+```bash
+forge create --rpc-url $RPC_URL_DEVNET \
+--private-key $PRIVATE_KEY \
+src/PPTToken.sol:PPTToken \
+--broadcast \
+--constructor-args <initial_supply> 
+```
+
+2. **Deploy MedInvoiceContract contract (replace `<PPT_TOKEN_ADDRESS>`):**
+
+```bash
+forge create --rpc-url $RPC_URL_DEVNET \
+--private-key $PRIVATE_KEY \
+src/MedInvoiceContract.sol:MedInvoiceContract \
+--broadcast \
+--constructor-args <PPT_TOKEN_ADDRESS>
+```
+
 #### Deploy to Base Sepolia Testnet
 
 1. **Using the deployment script:**
@@ -135,7 +166,20 @@ forge create src/MedInvoiceContract.sol:MedInvoiceContract
 
 ### Verification
 
-- Verify deployed contracts on Basescan:
+**Verify deployed contracts on Neon Blockscout:**
+- Verify PPTToken:
+
+```bash
+forge verify-contract --chain-id $CHAIN_ID_DEVNET <PPT_TOKEN_ADDRESS> src/PPTToken.sol:PPTToken --verifier-url $VERIFIER_URL_BLOCKSCOUT --verifier blockscout
+```
+
+- Verify MedInvoiceContract:
+```bash
+forge verify-contract --chain-id $CHAIN_ID_DEVNET <MEDINVOICE_CONTRACT_ADDRESS> src/MedInvoiceContract.sol:MedInvoiceContract --verifier-url $VERIFIER_URL_BLOCKSCOUT --verifier blockscout
+```
+
+**Verify deployed contracts on Basescan:**
+- Verify PPTToken:
 ```bash
 forge verify-contract
 --chain-id 84532
@@ -154,6 +198,7 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 --constructor-args $(cast abi-encode "constructor(address)" <PPT_TOKEN_ADDRESS>)
 ```
 
+
 **Key Features:**
 - File storage per user address
 - Token-gated access (requires PPT balance ≥ 1)
@@ -169,6 +214,13 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 
 ## 🌐 Network Information
 
+### Neon EVM Devnet
+
+- Chain ID: 245022926  
+- RPC URL: https://devnet.neonevm.org  
+- Block Explorer: https://neon-devnet.blockscout.com  
+- Faucet: https://neonfaucet.org/  
+
 ### Base Sepolia Testnet
 - **Chain ID**: 84532
 - **RPC URL**: https://sepolia.base.org
@@ -181,6 +233,9 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 |----------|---------|---------|
 | PPTToken | `0x4af65ccadeBE20cCE966B739fD7a5310467F5866` | Base Sepolia |
 | MedInvoiceContract | `0x1cA76036A0385a0271D6A1A8b5C0e15138bf87BE` | Base Sepolia |
+|----------|---------|---------|
+| PPTToken | `0x05A6B7551D18b23c391598bce0C5CddF1CC28A23` | Neon EVM Devnet |
+| MedInvoiceContract | `0x77A297a19fc48a9B70c74C388d3a419e13aBCd0e` | Neon EVM Devnet |
 
 ## 🧪 Testing
 

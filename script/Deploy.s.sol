@@ -5,21 +5,18 @@ import "forge-std/Script.sol";
 import "../src/PPTToken.sol";
 import "../src/MedInvoiceContract.sol";
 
-contract DeployAndVerifyContract is Script {
+contract DeployContract is Script {
     function run() external {
-        // Start broadcasting transactions
         vm.startBroadcast();
 
-        // Deploy PPTToken with initial supply of 1,000 tokens
-        PPTToken token = new PPTToken(1000);
+        // Deploy PPTToken with an initial supply (change as needed)
+        PPTToken token = new PPTToken(20000);
 
-        // Deploy MedInvoiceContract with address of the deployed PPTToken
+        // Deploy MedInvoiceContract with PPTToken address
         MedInvoiceContract medInvoice = new MedInvoiceContract(address(token));
 
-        // Stop broadcast
         vm.stopBroadcast();
 
-        // Log deployed addresses
         console.log("PPTToken deployed at:", address(token));
         console.log("MedInvoiceContract deployed at:", address(medInvoice));
     }
