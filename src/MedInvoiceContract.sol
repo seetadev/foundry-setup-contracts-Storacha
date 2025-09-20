@@ -6,6 +6,7 @@ import {PPTToken} from './PPTToken.sol';
 
 contract MedInvoiceContract is Ownable, ReentrancyGuard {
     mapping(address => string[]) private fileList;
+    mapping(address => string) public organisations;
     PPTToken public immutable pptToken;
     uint256 public constant SUBSCRIPTION_AMOUNT = 10 * 10**18;
     uint256 public constant SUBSCRIPTION_PERIOD = 365 days;
@@ -57,6 +58,18 @@ contract MedInvoiceContract is Ownable, ReentrancyGuard {
         require(pptToken.transfer(msg.sender, SUBSCRIPTION_AMOUNT), "Token transfer failed");
 
         emit NewSubscription(msg.sender, endTime);
+    }
+
+    function orgSubscribe(address user, string memory orgEmail) external onlyOwner nonReentrant {
+        require(!isSubscribed(user), "Organisation already subscribed");
+        require(bytes(orgEmail).length > 0, "Organisation email cannot be empty");
+        
+        organisations[user] = orgEmail;
+        uint256 endTime = block.timestamp + SUBSCRIPTION_PERIOD;
+        subscriptionEndTimes[user] = endTime;
+        require(pptToken.transfer(user, SUBSCRIPTION_AMOUNT), "Token transfer failed");
+
+        emit NewSubscription(user, endTime);
     }
 
     function mintToken(uint256 amount) external {
