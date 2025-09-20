@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
-import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {PPTToken} from './PPTToken.sol';
 
 contract MedInvoiceContract is Ownable, ReentrancyGuard {
     mapping(address => string[]) private fileList;
-    IERC20 public immutable pptToken;
+    PPTToken public immutable pptToken;
     uint256 public constant SUBSCRIPTION_AMOUNT = 10 * 10**18;
     uint256 public constant SUBSCRIPTION_PERIOD = 365 days;
     mapping(address => uint256) public subscriptionEndTimes;
@@ -15,7 +15,7 @@ contract MedInvoiceContract is Ownable, ReentrancyGuard {
     event NewSubscription(address indexed subscriber, uint256 endTime);
 
     constructor(address _pptToken) Ownable(msg.sender) {
-        pptToken = IERC20(_pptToken);
+        pptToken = PPTToken(_pptToken);
     }
 
     function saveFile(string memory file) public {
@@ -59,7 +59,13 @@ contract MedInvoiceContract is Ownable, ReentrancyGuard {
         emit NewSubscription(msg.sender, endTime);
     }
 
+    function mintToken(uint256 amount) external {
+        require(isSubscribed(msg.sender),"User must subscribe first.");
+        pptToken.mint(msg.sender, amount);
+    }
+
     function withdrawTokens(uint256 amount) external onlyOwner {
         require(pptToken.transfer(owner(), amount), "Token withdrawal failed");
     }
 }
+

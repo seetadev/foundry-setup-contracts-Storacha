@@ -211,6 +211,7 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 - `getFiles()`: Retrieve user's stored files
 - `subscribe()`: Purchase annual subscription
 - `isSubscribed(address user)`: Check subscription status
+= `mintTokens(uint256 amoutn)` : Mint new PPT tokens if user is subscribed.
 
 ## 🌐 Network Information
 
@@ -234,8 +235,8 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 | PPTToken | `0x4af65ccadeBE20cCE966B739fD7a5310467F5866` | Base Sepolia |
 | MedInvoiceContract | `0x1cA76036A0385a0271D6A1A8b5C0e15138bf87BE` | Base Sepolia |
 |----------|---------|---------|
-| PPTToken | `0x05A6B7551D18b23c391598bce0C5CddF1CC28A23` | Neon EVM Devnet |
-| MedInvoiceContract | `0x77A297a19fc48a9B70c74C388d3a419e13aBCd0e` | Neon EVM Devnet |
+| PPTToken | `0xd3Ec5f72711FF370093f029511CA0beeAcE888f4` | Neon EVM Devnet |
+| MedInvoiceContract | `0x94E41D4EFB03D483aB2E1D9addA86DccEd36338B` | Neon EVM Devnet |
 
 ## 🧪 Testing
 
