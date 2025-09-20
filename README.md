@@ -134,7 +134,7 @@ src/MedInvoiceContract.sol:MedInvoiceContract \
 source .env
 ```
 ```bash
-forge script script/DeployAndVerify.s.sol:DeployAndVerifyContract
+forge script script/Deploy.s.sol:DeployContract
 --rpc-url $RPC_URL
 --private-key $PRIVATE_KEY
 --chain-id 84532
@@ -233,8 +233,8 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 
 | Contract | Address | Network |
 |----------|---------|---------|
-| PPTToken | `0x4af65ccadeBE20cCE966B739fD7a5310467F5866` | Base Sepolia |
-| MedInvoiceContract | `0x1cA76036A0385a0271D6A1A8b5C0e15138bf87BE` | Base Sepolia |
+| PPTToken | `0xAA74b62532c8153e7caF8A6ee53CD2333C6BC2D0` | Base Sepolia |
+| MedInvoiceContract | `0x768f9565c4cE30563F58beD5d64265e5EC8DBdBa` | Base Sepolia |
 |----------|---------|---------|
 | PPTToken | `0x3219A8230d9e9f3766cf1FC677129A0053BE5cD7` | Neon EVM Devnet |
 | MedInvoiceContract | `0x665f6A79bBBBa0907D92AaB2Af174c14d78923D7` | Neon EVM Devnet |

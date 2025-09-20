@@ -10,7 +10,7 @@ contract DeployContract is Script {
         vm.startBroadcast();
 
         // Deploy PPTToken with an initial supply (change as needed)
-        PPTToken token = new PPTToken(20000);
+        PPTToken token = new PPTToken(200000);
 
         // Deploy MedInvoiceContract with PPTToken address
         MedInvoiceContract medInvoice = new MedInvoiceContract(address(token));
