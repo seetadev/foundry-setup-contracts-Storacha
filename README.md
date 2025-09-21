@@ -164,6 +164,18 @@ forge create src/MedInvoiceContract.sol:MedInvoiceContract
 --etherscan-api-key $ETHERSCAN_API_KEY
 ```
 
+#### Deploy to Hedera Testnet
+```bash
+forge script script/Deploy.s.sol:DeployContract \
+--rpc-url $RPC_URL \
+--private-key $PRIVATE_KEY \
+--chain-id 296 \
+--broadcast \
+--verify \
+--verifier sourcify --verifier-url https://server-verify.hashscan.io \
+-vvvv
+```
+
 ### Verification
 
 **Verify deployed contracts on Neon Blockscout:**
@@ -229,6 +241,12 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 - **Block Explorer**: https://sepolia.basescan.org
 - **Faucet**: [Base Sepolia Faucet](https://faucets.chain.link/base-sepolia)
 
+### Hedera Testnet
+- **Chain ID**: 296
+- **RPC URL**: https://testnet.hashio.io/api
+- **Block Explorer**: https://hashscan.io/testnet
+- **Faucet**: Setup Hedera Testnet through dashboard [link](https://www.youtube.com/watch?v=Uh7UdSPKSxw)
+
 ### Deployed Contracts
 
 | Contract | Address | Network |
@@ -238,6 +256,9 @@ src/MedInvoiceContract.sol:MedInvoiceContract
 |----------|---------|---------|
 | PPTToken | `0x3219A8230d9e9f3766cf1FC677129A0053BE5cD7` | Neon EVM Devnet |
 | MedInvoiceContract | `0x665f6A79bBBBa0907D92AaB2Af174c14d78923D7` | Neon EVM Devnet |
+|----------|---------|---------|
+| PPTToken | `0xEF3E68FE835BF43c9C915925fB6b433576A8EF1b` | Hedera Testnet |
+| MedInvoiceContract | `0x5eb317fFb88031783937C5cc2AF1E69F35D7038B` | Hedera Testnet |
 
 ## 🧪 Testing
 
