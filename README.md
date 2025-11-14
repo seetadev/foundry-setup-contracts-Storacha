@@ -143,6 +143,9 @@ forge script script/Deploy.s.sol:DeployContract
 --etherscan-api-key $ETHERSCAN_API_KEY
 -vvvv
 ```
+```bash
+forge script script/DeployToken.s.sol:DeployToken --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast  --chain-id 84532 --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv
+```
 
 2. **Deploy individual contracts:**
 Deploy PPTToken
