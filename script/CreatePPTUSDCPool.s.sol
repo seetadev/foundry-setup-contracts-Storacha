@@ -51,11 +51,11 @@ contract CreatePPTUSDCPool is Script {
 
     function run() external {
         address lp = msg.sender;
-        require(PPT < USDC, "token order");
+        require(PPT < USDC, "PPT must be the lower address");
         require(IERC20(PPT).balanceOf(lp) >= AMOUNT_PPT, "insufficient PPT");
         require(IERC20(USDC).balanceOf(lp) >= AMOUNT_USDC, "insufficient USDC");
 
-        // sqrtPriceX96 = 2^96 / 1e7, which is 0.01 USDC (6 decimals) per 1 PPT (18 decimals).
+        // 0.01 USDC (6 decimals) per 1 PPT (18 decimals).
         uint160 sqrtPriceX96 = uint160((uint256(1) << 96) / 1e7);
 
         vm.startBroadcast();
@@ -66,31 +66,32 @@ contract CreatePPTUSDCPool is Script {
         address pool = INonfungiblePositionManager(POSITION_MANAGER)
             .createAndInitializePoolIfNecessary(PPT, USDC, FEE, sqrtPriceX96);
 
-        (uint256 tokenId, uint128 liquidity, uint256 amount0, uint256 amount1) = INonfungiblePositionManager(
-            POSITION_MANAGER
-        ).mint(
-            INonfungiblePositionManager.MintParams({
-                token0: PPT,
-                token1: USDC,
-                fee: FEE,
-                tickLower: TICK_LOWER,
-                tickUpper: TICK_UPPER,
-                amount0Desired: AMOUNT_PPT,
-                amount1Desired: AMOUNT_USDC,
-                amount0Min: 0,
-                amount1Min: 0,
-                recipient: lp,
-                deadline: block.timestamp + 30 minutes
-            })
-        );
+        (uint256 tokenId, uint128 liquidity, uint256 pptDeposited, uint256 usdcDeposited) = INonfungiblePositionManager(
+                POSITION_MANAGER
+            )
+            .mint(
+                INonfungiblePositionManager.MintParams({
+                    token0: PPT,
+                    token1: USDC,
+                    fee: FEE,
+                    tickLower: TICK_LOWER,
+                    tickUpper: TICK_UPPER,
+                    amount0Desired: AMOUNT_PPT,
+                    amount1Desired: AMOUNT_USDC,
+                    amount0Min: 0,
+                    amount1Min: 0,
+                    recipient: lp,
+                    deadline: block.timestamp + 30 minutes
+                })
+            );
 
         vm.stopBroadcast();
 
         console.log("Pool:", pool);
         console.log("Position NFT:", tokenId);
         console.log("Liquidity:", liquidity);
-        console.log("PPT deposited:", amount0);
-        console.log("USDC deposited:", amount1);
+        console.log("PPT deposited:", pptDeposited);
+        console.log("USDC deposited:", usdcDeposited);
         console.log("Position owner:", lp);
     }
 }

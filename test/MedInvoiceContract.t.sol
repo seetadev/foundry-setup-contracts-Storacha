@@ -12,7 +12,7 @@ contract MedInvoiceContractTest is Test {
     address user = address(0xBEEF);
 
     function setUp() public {
-        token = new PPTToken(1000);
+        token = new PPTToken();
         contractInstance = new MedInvoiceContract(address(token));
 
         // Give the user some PPT tokens
@@ -28,8 +28,7 @@ contract MedInvoiceContractTest is Test {
 
         contractInstance.subscribe();
 
-        (bool exists, uint256 endTime) = contractInstance
-            .getSubscriptionDetails();
+        (bool exists, uint256 endTime) = contractInstance.getSubscriptionDetails();
         assertTrue(exists);
         assertGt(endTime, block.timestamp);
 

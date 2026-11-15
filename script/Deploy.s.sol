@@ -9,8 +9,7 @@ contract DeployContract is Script {
     function run() external {
         vm.startBroadcast();
 
-        // Deploy PPTToken with an initial supply (change as needed)
-        PPTToken token = new PPTToken(200000);
+        PPTToken token = new PPTToken();
 
         // Deploy MedInvoiceContract with PPTToken address
         MedInvoiceContract medInvoice = new MedInvoiceContract(address(token));

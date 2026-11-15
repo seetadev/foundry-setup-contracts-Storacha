@@ -5,17 +5,17 @@ import "forge-std/Script.sol";
 import "../src/PPTToken.sol";
 
 contract DeployPPTToken is Script {
-    uint256 internal constant INITIAL_SUPPLY = 200_000;
-
     function run() external {
+        address deployer = msg.sender;
+
         vm.startBroadcast();
 
-        PPTToken token = new PPTToken(INITIAL_SUPPLY);
+        PPTToken token = new PPTToken();
 
         vm.stopBroadcast();
 
         console.log("PPTToken deployed at:", address(token));
-        console.log("Initial supply (whole tokens):", INITIAL_SUPPLY);
-        console.log("Owner:", token.owner());
+        console.log("Total supply (whole tokens):", token.TOTAL_SUPPLY() / 1e18);
+        console.log("Deployer balance (whole tokens):", token.balanceOf(deployer) / 1e18);
     }
 }
