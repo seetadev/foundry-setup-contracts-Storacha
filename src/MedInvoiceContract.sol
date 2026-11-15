@@ -2,13 +2,13 @@
 pragma solidity ^0.8.20;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import {PPTToken} from './PPTToken.sol';
+import {PPTToken} from "./PPTToken.sol";
 
 contract MedInvoiceContract is Ownable, ReentrancyGuard {
     mapping(address => string[]) private fileList;
     mapping(address => string) public organisations;
     PPTToken public immutable pptToken;
-    uint256 public constant SUBSCRIPTION_AMOUNT = 10 * 10**18;
+    uint256 public constant SUBSCRIPTION_AMOUNT = 10 * 10 ** 18;
     uint256 public constant SUBSCRIPTION_PERIOD = 365 days;
     mapping(address => uint256) public subscriptionEndTimes;
 
@@ -63,19 +63,13 @@ contract MedInvoiceContract is Ownable, ReentrancyGuard {
     function orgSubscribe(address user, string memory orgEmail) external onlyOwner nonReentrant {
         require(!isSubscribed(user), "Organisation already subscribed");
         require(bytes(orgEmail).length > 0, "Organisation email cannot be empty");
-        
+
         organisations[user] = orgEmail;
         uint256 endTime = block.timestamp + SUBSCRIPTION_PERIOD;
         subscriptionEndTimes[user] = endTime;
         require(pptToken.transfer(user, SUBSCRIPTION_AMOUNT), "Token transfer failed");
 
         emit NewSubscription(user, endTime);
-    }
-
-    /// @param amount Number of whole PPT tokens to mint (e.g. 1 = 1 PPT, not 1 wei)
-    function mintToken(uint256 amount) external {
-        require(isSubscribed(msg.sender), "User must subscribe first.");
-        pptToken.mint(msg.sender, amount * 1e18);
     }
 
     function withdrawTokens(uint256 amount) external onlyOwner {
